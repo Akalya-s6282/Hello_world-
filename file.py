@@ -1,42 +1,85 @@
 import random
 import flet as ft
 
+cp = 0
+y=0
 
 def main(page: ft.Page):
-    def Computer():
-        Elements=[1,2,3]
-        return random.choices(Elements)
-    def Rock_clicked(e):
-        output_text.value = "Your choice is Rock"
-        if Computer == 1 :
-            Text.value="Similar choice"
-        elif Computer == 2 :
-            Text.value="Computer wins"
-        else :
-            Text.value="You win"
-        page.update()
-    def Paper_clicked(e):
-        output_text.value ="Your choice is Paper"
-        if Computer == 2 :
-            Text.value="Similar choice"
-        elif Computer == 3 :
-            Text.value="Computer wins"
-        else :
-            Text.value="You win"
-        page.update()
-    def Scissors_clicked(e):
-        output_text.value ="Your choice is Scissors"
-        if Computer == 3 :
-            Text.value="Similar choice"
-        elif Computer == 1 :
-            Text.value="Computer wins"
-        else :
-            Text.value="You win"
+    def Exit1(e):
+        Rock.visible = False
+        Paper.visible = False
+        Scissors.visible = False
+        output_text.value = ""
+        Text.value = ""
+        Score.value = f"Your score={y}\nComputer Score={cp}"
+        Comp.text = "Game Exited"
+        Exit.visible = False
         page.update()
     
-
+    def Scores(): 
+        Score.value = f"Your score={y}\nComputer Score={cp}"
+        page.update()
+    
+    def Computer():
+        Elements=[1,2,3]
+        CChoice = ["Rock","Paper","Scissors"]
+        C = random.choice(Elements)
+        Comp.text = CChoice[C-1]
+        page.update()
+        return C
+    
+    
+    def Rock_clicked(e):
+        global cp,y
+        Computer1 = Computer()
+        output_text.value = "Your choice is Rock"
+        if Computer1 == 1 :
+            Text.value="Similar choice"
+        elif Computer1 == 2 :
+            Text.value="Computer wins"
+            cp+=1
+        else :
+            Text.value="You win"
+            y+=1
+        Scores()
+        page.update()
+   
+    def Paper_clicked(e):
+        global cp,y
+        Computer1 = Computer()
+        output_text.value ="Your choice is Paper"
+        if Computer1 == 2 :
+            Text.value="Similar choice"
+        elif Computer1 == 3 :
+            Text.value="Computer wins"
+            cp+=1
+        else :
+            Text.value="You win"
+            y+=1
+        Scores()
+        page.update()
+    
+    
+    def Scissors_clicked(e):
+        global cp,y
+        output_text.value ="Your choice is Scissors"
+        Computer1 = Computer()
+        if Computer1 == 3 :
+            Text.value="Similar choice"
+        elif Computer1 == 1 :
+            Text.value="Computer wins"
+            cp+=1
+        else :
+            Text.value="You win"
+            y+=1
+        Scores()
+        page.update()
+    
     output_text = ft.Text()
     Text = ft.Text()
+    Score = ft.Text()
+    Comp = ft.ElevatedButton(text=" ")
+    Exit = ft.ElevatedButton(text="Exit", on_click=Exit1)
     Rock = ft.ElevatedButton(text="Stone", on_click=Rock_clicked)
     Paper = ft.ElevatedButton(text="Paper", on_click=Paper_clicked)
     Scissors = ft.ElevatedButton(text="Scissors", on_click=Scissors_clicked)
@@ -48,7 +91,7 @@ def main(page: ft.Page):
 #            ft.dropdown.Option("Blue"),
 #        ],
 #    )
-    page.add( Rock, Paper, Scissors, output_text,Text)
+    page.add( Rock, Paper, Scissors, output_text,Text,Score,Comp,Exit)
 
 ft.app(target=main,view=ft.AppView.WEB_BROWSER)
 
