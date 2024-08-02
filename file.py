@@ -75,6 +75,11 @@ def main(page: ft.Page):
         Scores()
         page.update()
     
+    def Start_game(e):
+        front_page.visible = False
+        game_page.visible = True
+        page.update()
+
     output_text = ft.Text()
     Text = ft.Text()
     Score = ft.Text()
@@ -83,6 +88,20 @@ def main(page: ft.Page):
     Rock = ft.ElevatedButton(text="Stone", on_click=Rock_clicked)
     Paper = ft.ElevatedButton(text="Paper", on_click=Paper_clicked)
     Scissors = ft.ElevatedButton(text="Scissors", on_click=Scissors_clicked)
+
+    front_page = ft.Column(
+        controls =[
+            ft.Text("Welcome to Rock,Paper,Scissors"),
+            ft.ElevatedButton(text="Start Game",on_click=Start_game)
+        ],
+        visible=True
+    )
+    game_page = ft.Column(
+        controls =[
+            Rock,Paper,Scissors,output_text,Text,Score,Comp,Exit
+        ],
+        visible = False
+    )
 #    color_dropdown = ft.Dropdown(
 #        width=100,
 #        options=[
@@ -91,7 +110,7 @@ def main(page: ft.Page):
 #            ft.dropdown.Option("Blue"),
 #        ],
 #    )
-    page.add( Rock, Paper, Scissors, output_text,Text,Score,Comp,Exit)
+    page.add(front_page,game_page)
 
 ft.app(target=main,view=ft.AppView.WEB_BROWSER)
 
