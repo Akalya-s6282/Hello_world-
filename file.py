@@ -5,6 +5,9 @@ cp = 0
 y=0
 
 def main(page: ft.Page):
+    page.vertical_alignment = ft.MainAxisAlignment.CENTER
+    page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
+
     def Exit1(e):
         Rock.visible = False
         Paper.visible = False
@@ -84,32 +87,58 @@ def main(page: ft.Page):
     Text = ft.Text()
     Score = ft.Text()
     Comp = ft.ElevatedButton(text=" ")
-    Exit = ft.ElevatedButton(text="Exit", on_click=Exit1)
-    Rock = ft.ElevatedButton(text="Stone", on_click=Rock_clicked)
-    Paper = ft.ElevatedButton(text="Paper", on_click=Paper_clicked)
-    Scissors = ft.ElevatedButton(text="Scissors", on_click=Scissors_clicked)
+    Exit = ft.ElevatedButton(text="Exit",width =100, on_click=Exit1)
+    Rock = ft.ElevatedButton(text="Rock",width =100, on_click=Rock_clicked)
+    Paper = ft.ElevatedButton(text="Paper",width =100, on_click=Paper_clicked)
+    Scissors = ft.ElevatedButton(text="Scissors",width =100, on_click=Scissors_clicked)
 
-    front_page = ft.Column(
-        controls =[
-            ft.Text("Welcome to Rock,Paper,Scissors"),
-            ft.ElevatedButton(text="Start Game",on_click=Start_game)
+    front_page = ft.Container(
+    content=ft.Column(
+        [
+            ft.Text("Welcome to Rock, Paper, Scissors"),
+            ft.ElevatedButton(text="Start Game", on_click=Start_game)
         ],
-        visible=True
-    )
-    game_page = ft.Column(
-        controls =[
-            Rock,Paper,Scissors,output_text,Text,Score,Comp,Exit
-        ],
-        visible = False
-    )
-#    color_dropdown = ft.Dropdown(
-#        width=100,
-#        options=[
-#            ft.dropdown.Option("Red"),
-#            ft.dropdown.Option("Green"),
-#            ft.dropdown.Option("Blue"),
-#        ],
-#    )
+        alignment=ft.MainAxisAlignment.CENTER,
+        horizontal_alignment=ft.CrossAxisAlignment.CENTER
+    ),
+    alignment=ft.alignment.center,
+    visible=True
+)
+    game_page = ft.Container(
+    content=ft.Column(
+        [
+            ft.Row(
+                [
+                    ft.Column(
+                        controls=[Rock, Paper, Scissors],
+                        alignment=ft.MainAxisAlignment.START,
+                        horizontal_alignment=ft.CrossAxisAlignment.CENTER
+                    ),
+                    ft.Column(
+                        controls=[Comp],
+                       alignment=ft.MainAxisAlignment.START,
+                       horizontal_alignment=ft.CrossAxisAlignment.CENTER
+                    ),
+                    
+                ],
+                alignment=ft.MainAxisAlignment.CENTER,
+                
+            ),
+           ft.Row(
+               controls=[ output_text,
+                         Text,
+                         Score,
+                         Exit],
+              alignment=ft.MainAxisAlignment.CENTER,
+             #horizontal_alignment=ft.CrossAxisAlignment.CENTER
+        ), 
+        ]
+    ),
+      
+                     
+    alignment=ft.alignment.center,
+    visible=False
+)
     page.add(front_page,game_page)
 
 ft.app(target=main,view=ft.AppView.WEB_BROWSER)
